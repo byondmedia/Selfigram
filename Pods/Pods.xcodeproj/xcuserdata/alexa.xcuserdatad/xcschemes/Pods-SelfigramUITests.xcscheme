@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'F9688337CD98BD3F5388DE19D6E37012'
+               BlueprintIdentifier = '59F565F9A1A17EEEC56141C1D7AD12AC'
                BlueprintName = 'Pods-SelfigramUITests'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Pods-SelfigramUITests.framework'>
+               BuildableName = 'libPods-SelfigramUITests.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

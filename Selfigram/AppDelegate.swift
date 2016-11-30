@@ -9,26 +9,64 @@
 import UIKit
 import Parse
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-   
     var window: UIWindow?
+    
+    
+//    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+//
+//        // Initialize Parse.
+//        // Replace XXXX with the App ID and Server URL that you recieved
+//        let configuration = ParseClientConfiguration { clientConfiguration in
+//            clientConfiguration.applicationId = "3bce0997-bda3-4942-90e3-19f07a569f7c"
+//            clientConfiguration.server = "https://ios-van-pt-parse-server-2.herokuapp.com/parse"
+//        }
+//        Parse.initialize(with: configuration)
+//        
+//        let testObject = PFObject(className: "TestObject")
+//        testObject["foo"] = "bar"
+//        testObject.saveInBackground(block: { (success: Bool, error: Error?) -> Void in
+//            print("Object has been saved.")
+//        })
+//        
+//        return true
+//    }
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        
         // Initialize Parse.
         // Replace XXXX with the App ID and Server URL that you recieved
-        let configuration = ParseClientConfiguration { clientConfiguration in
-            clientConfiguration.applicationId = "f80f4aa8-3c6c-460e-af8f-ab46fabb2c74"
-            clientConfiguration.server = "https://ios-van-pt-parse-server-1.herokuapp.com/parse"
-        }
         
+        
+
+        let configuration = ParseClientConfiguration { clientConfiguration in
+            clientConfiguration.applicationId = "3bce0997-bda3-4942-90e3-19f07a569f7c"
+            clientConfiguration.server = "https://ios-van-pt-parse-server-2.herokuapp.com/parse"
+            
+        }
         Parse.initialize(with: configuration)
 
+        
+        let user = PFUser()
+        let username = "lighthouse"
+        let password = "labs"
+        user.username = username
+        user.password = password
+        user.signUpInBackground(block: { (success, error) -> Void in
+            if success {
+                print("successfully signuped a user")
+            }else {
+                PFUser.logInWithUsername(inBackground: username, password: password, block: { (user, error) -> Void in
+                    if let user = user {
+                        print("successfully logged in \(user)")
+                    }
+                })
+            }
+        })
+        
+        // Override point for customization after application launch.
         return true
     }
 

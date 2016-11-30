@@ -7,14 +7,17 @@
 //
 
 import UIKit
+import Parse
+
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
 
     @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var ProfileImageView: UIImageView!
    
     
-    @IBAction func cameraButtonPressed(_ sender: Any) {
+    @IBAction func cameraButtonPressed(_ sender: AnyObject) {
         
         // 1: Create an ImagePickerController
         let pickerController = UIImagePickerController()
@@ -43,7 +46,49 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
 
         print("Camera Button Pressed")
     }
-
+    
+    
+    
+//    
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//        
+//        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+//            // setting the compression quality to 90%
+//            if let imageData = UIImageJPEGRepresentation(image, 0.9),
+//                let imageFile = PFFile(data: imageData),
+//                let user = PFUser.current(){
+//                
+//                //2. We create a Post object from the image
+//                let post = Post(image: imageFile, user: user, comment: "A Selfie")
+//                
+//                post.saveInBackground(block: { (success, error) -> Void in
+//                    if success {
+//                        print("Post successfully saved in Parse")
+//                        
+//                        //3. Add post to our posts array, chose index 0 so that it will be added
+//                        //   to the top of your table instead of at the bottom (default behaviour)
+//                        self.posts.insert(post, at: 0)
+//                        
+//                        //4. Now that we have added a post, updating our table
+//                        //   We are just inserting our new Post instead of reloading our whole tableView
+//                        //   Both method would work, however, this gives us a cool animation for free
+//                        
+//                        let indexPath = IndexPath(row: 0, section: 0)
+//                        self.tableView.insertRows(at: [indexPath], with: .automatic)
+//                    }
+//                })
+//            }
+//        }
+//        
+//        //4. We remember to dismiss the Image Picker from our screen.
+//        dismiss(animated: true, completion: nil)
+//        
+//        //5. Now that we have added a post, reload our table
+//        tableView.reloadData()
+//        
+//    }
+//    
+    
     
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -53,8 +98,22 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         //    We are getting an image from the UIImagePickerControllerOriginalImage key in that dictionary
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             
-            //2. To our imageView, we set the image property to be the image the user has chosen
-            profileImageView.image = image
+            // setting the compression quality to 90%
+            if let imageData = UIImageJPEGRepresentation(image, 0.9),
+                let imageFile = PFFile(data: imageData),
+                let user = PFUser.current(){
+                
+                // avatarImage is a new column in our User table
+                user["avatarImage"] = imageFile
+                user.saveInBackground(block: { (success, error) -> Void in
+                    if success {
+                        // set our profileImageView to be the image we have picked
+                        let image = UIImage(data: imageData)
+                        self.ProfileImageView.image = image
+                    }
+                })
+                
+            }
             
         }
         
@@ -64,17 +123,42 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
    
-    @IBOutlet weak var profileImageView: UIImageView!
+    //@IBOutlet weak var profileImageView: UIImageView!
+    
+    
+    
+    
+    
+    
+    
     override func viewDidLoad() {
+        super.viewDidLoad()
         
        usernameLabel.text = "Alejandra"
        // super.viewDidLoad()
         
         
-
         // Do any additional setup after loading the view.
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let user = PFUser.current(){
+            usernameLabel.text = user.username
+            
+            if let imageFile = user["avatarImage"] as? PFFile {
+                
+                imageFile.getDataInBackground(block: { (data, error) -> Void in
+                    if let imageData = data {
+                      self.ProfileImageView.image = UIImage(data: imageData)
+                    }
+                })
+            }
+        }
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
