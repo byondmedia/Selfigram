@@ -7,15 +7,28 @@
 //
 
 import UIKit
+import Parse
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+   
     var window: UIWindow?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Initialize Parse.
+        // Replace XXXX with the App ID and Server URL that you recieved
+        let configuration = ParseClientConfiguration { clientConfiguration in
+            clientConfiguration.applicationId = "f80f4aa8-3c6c-460e-af8f-ab46fabb2c74"
+            clientConfiguration.server = "https://ios-van-pt-parse-server-1.herokuapp.com/parse"
+        }
+        
+        Parse.initialize(with: configuration)
+
         return true
     }
 
