@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //    }
 
 
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Initialize Parse.
         // Replace XXXX with the App ID and Server URL that you recieved
@@ -46,6 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             clientConfiguration.server = "https://ios-van-pt-parse-server-2.herokuapp.com/parse"
             
         }
+        Post.registerSubclass()
         Parse.initialize(with: configuration)
 
         
