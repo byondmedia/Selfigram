@@ -26,13 +26,25 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="319"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eUn-TE-qsg">
+                                            <rect key="frame" x="296" y="252" width="96" height="37"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="Iab-9r-dD4"/>
+                                                <constraint firstAttribute="width" constant="23" id="w9y-Uu-jd5"/>
+                                            </constraints>
+                                            <state key="normal" image="hearts-off"/>
+                                            <state key="selected" image="hearts-on"/>
+                                            <connections>
+                                                <action selector="likeButtonClicked:" destination="Ndm-b3-Yok" eventType="touchUpInside" id="RAX-7r-ydl"/>
+                                            </connections>
+                                        </button>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2vG-qv-VzT">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="250" id="AGu-uA-8hE"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Uaername" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tde-C3-xrl">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tde-C3-xrl">
                                             <rect key="frame" x="14" y="248" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -48,13 +60,16 @@
                                         </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="eUn-TE-qsg" firstAttribute="top" secondItem="2vG-qv-VzT" secondAttribute="bottom" constant="8" id="3KD-2m-AFo"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="2vG-qv-VzT" secondAttribute="trailing" id="5g1-mV-2aF"/>
+                                        <constraint firstAttribute="trailing" secondItem="eUn-TE-qsg" secondAttribute="trailing" constant="8" id="eU3-7j-Oj0"/>
                                         <constraint firstItem="2vG-qv-VzT" firstAttribute="top" secondItem="KCw-Ur-Zom" secondAttribute="topMargin" id="pkv-9I-qSj"/>
                                         <constraint firstItem="2vG-qv-VzT" firstAttribute="leading" secondItem="KCw-Ur-Zom" secondAttribute="leadingMargin" id="tvm-Gx-UBc"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="commentLabel" destination="2Tw-Ml-0zb" id="VAo-8t-Bod"/>
+                                    <outlet property="likeButton" destination="eUn-TE-qsg" id="i5n-Ag-Zqa"/>
                                     <outlet property="selfieImageView" destination="2vG-qv-VzT" id="fgT-nl-jAb"/>
                                     <outlet property="usernameLabel" destination="tde-C3-xrl" id="0KV-jy-Thd"/>
                                 </connections>
@@ -287,5 +302,7 @@
         <image name="NewsFeed" width="25" height="25"/>
         <image name="Profile" width="25" height="25"/>
         <image name="ProfileImageView" width="256" height="256"/>
+        <image name="hearts-off" width="42" height="37"/>
+        <image name="hearts-on" width="42" height="37"/>
     </resources>
 </document>
